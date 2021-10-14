@@ -33,9 +33,48 @@ void error_exit() {
 
 
 void game_input_board_size(Board & board) {
-  // TODO
+  cout << PROMPT_BOARD_SIZE << endl;
+  unsigned int temp_board_size;
+  if(!(cin >> temp_board_size) || temp_board_size < 2 || temp_board_size > 5) {
+    cout << MESSAGE_ERROR << endl;
+  }
+  else {
+  board_reset_size(board, temp_board_size);
+  }
+
 }
 
 void game_display_board_and_input_next_move(Board & board) {
-  error_exit(); // TODO
+  board_print(board);
+  unsigned int row;
+  unsigned int column;
+
+    if(board_get_status(board) == (GameStatus::PLAYING_X_TURN)) {
+    cout << PROMPT_MOVE_X << endl;
+    cin >> row;
+    cin >> column;
+    if(!(board_make_move(board, row, column))) {
+      error_exit();
+    }
+    }
+    if(board_get_status(board) == (GameStatus::PLAYING_O_TURN)) {
+    cout << PROMPT_MOVE_O << endl;
+    cin >> row;
+    cin >> column;
+    if(!(board_make_move(board, row, column))) {
+      error_exit();
+    }
+    }
+  if(board_get_status(board) == (GameStatus::OVER_TIE)) {
+    cout << PROMPT_TIE << endl;
+    success_exit();
+  }
+  if(board_get_status(board) == (GameStatus::OVER_X_WON)) {
+    cout << PROMPT_WIN_X << endl;
+    success_exit();
+  }
+  if(board_get_status(board) == (GameStatus::OVER_O_WON)) {
+    cout << PROMPT_WIN_O << endl;
+    success_exit();
+  }
 }
