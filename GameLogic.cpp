@@ -33,6 +33,7 @@ void error_exit() {
 
 
 void game_input_board_size(Board & board) {
+  
   cout << PROMPT_BOARD_SIZE << endl;
   unsigned int temp_board_size;
   if(!(cin >> temp_board_size) || temp_board_size < 2 || temp_board_size > 5) {

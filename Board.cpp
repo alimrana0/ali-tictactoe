@@ -15,6 +15,7 @@ void board_reset_size(Board & board, unsigned int size)
       }
      board.spaces.push_back(tempVector);
   }
+  board.next_move = Space::O;
   
 }
 
@@ -96,30 +97,49 @@ void board_print(const Board & board)
 {
   for(unsigned int r = 0; r < board.spaces.size(); r++) {
     for(unsigned int c = 0; c < board.spaces[r].size(); c++) {
-      if(c == board.spaces[r].size() - 1){
+      if(r < board.spaces.size() && c == board.spaces[r].size() - 1){
         if (board.spaces[r][c] == Space::X) {
         cout << "X" << endl;
-        for(unsigned int i = 0; i <= board.spaces.size(); i++) {
+        if(r < board.spaces.size() -1) {
+        for(unsigned int i = 0; i < board.spaces.size() + board.spaces.size() - 1; i++) {
           cout << "-";
         }
         cout << endl;
+        }
       }
       else if(board.spaces[r][c] == Space::O) {
         cout << "O" << endl;
-        for(unsigned int i = 0; i <= board.spaces.size(); i++) {
+        if(r < board.spaces.size() -1) {
+        for(unsigned int i = 0; i < board.spaces.size() + board.spaces.size() - 1; i++) {
           cout << "-";
         }
         cout << endl;
+        }
       }
       else if(board.spaces[r][c] == Space::BLANK) {
         cout << " " << endl;
-        for(unsigned int i = 0; i <= board.spaces.size(); i++) {
+        if(r < board.spaces.size() -1) {
+        for(unsigned int i = 0; i < board.spaces.size() + board.spaces.size() - 1; i++) {
           cout << "-";
         }
         cout << endl;
       }
       }
+      }
       else {
+        if(r == board.spaces.size() - 1 && c == board.spaces.size() - 1) {
+          if (board.spaces[r][c] == Space::X) {
+        cout << "X|" << endl;
+      }
+      else if(board.spaces[r][c] == Space::O) {
+        cout << "O|" << endl;
+      }
+      else if(board.spaces[r][c] == Space::BLANK) {
+        cout << " |" << endl;
+      }
+      
+
+        }
       if (board.spaces[r][c] == Space::X) {
         cout << "X|";
       }
