@@ -51,7 +51,7 @@ void game_display_board_and_input_next_move(Board & board) {
 
     if(board_get_status(board) == (GameStatus::PLAYING_X_TURN)) {
     cout << PROMPT_MOVE_X << endl;
-    if(!(cin >> row && cin >> column) || row > board.size || column > board.size) {
+    if(!(cin >> row && cin >> column) || row >= board.size || column >= board.size) {
       error_exit();
     }
     else if(!(board_make_move(board, row, column))) {
@@ -60,7 +60,7 @@ void game_display_board_and_input_next_move(Board & board) {
     }
     if(board_get_status(board) == (GameStatus::PLAYING_O_TURN)) {
     cout << PROMPT_MOVE_O << endl;
-    if(!(cin >> row && cin >> column) || row > board.size || column > board.size) {
+    if(!(cin >> row && cin >> column) || row >= board.size || column >= board.size) {
       error_exit();
     }
     else if(!(board_make_move(board, row, column))) {
