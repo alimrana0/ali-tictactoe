@@ -46,70 +46,103 @@ bool board_make_move(Board & board, unsigned int row, unsigned int column)
   
 }
 
+bool x_won(const Board & board) {
+  int size = board.size;
+  //Row fill
+		for(int i = 0; i < size; ++i){
+			for(int j = 0; j < size; ++j){
+				if(board.spaces[i][j] != Space::X)
+					break;
+				if(j == (size-1))
+					return true;
+			}
+		}
+
+		//Column fill
+		for(int i = 0; i < size; ++i)
+			for(int j = 0; j < size; ++j){
+				if(board.spaces[j][i] != Space::X)
+					break;
+				if(j == (size-1))
+					return true;
+			}
+		
+		//left down diagonal fill
+		for(int i = 0; i < size; ++i){
+			if(board.spaces[i][i] != Space::X)
+				break;
+			if(i == (size-1))
+				return true;
+		}
+ 
+		//left up diagonal fill
+		for(int i = 0; i < size; ++i){
+			if(board.spaces[size - 1 - i][i] != Space::X)
+				break;
+			if(i == (size-1))
+				return true;
+		}
+		return false;
+}
+
+bool o_won(const Board & board) {
+  int size = board.size;
+  //Row fill
+		for(int i = 0; i < size; ++i){
+			for(int j = 0; j < size; ++j){
+				if(board.spaces[i][j] != Space::O)
+					break;
+				if(j == (size-1))
+					return true;
+			}
+		}
+
+		//Column fill
+		for(int i = 0; i < size; ++i)
+			for(int j = 0; j < size; ++j){
+				if(board.spaces[j][i] != Space::O)
+					break;
+				if(j == (size-1))
+					return true;
+			}
+		
+		//left down diagonal fill
+		for(int i = 0; i < size; ++i){
+			if(board.spaces[i][i] != Space::O)
+				break;
+			if(i == (size-1))
+				return true;
+		}
+ 
+		//left up diagonal fill
+		for(int i = 0; i < size; ++i){
+			if(board.spaces[size - 1 - i][i] != Space::O)
+				break;
+			if(i == (size-1))
+				return true;
+		}
+
+		return false;
+	}
+
+
 GameStatus board_get_status(const Board & board) {
-  bool sameElementRow;
-  bool sameElementCol;
-  bool sameElementDiagonalL = true;
-  bool sameElementDiagonalR = true;
-  Space firstElementDiagonalL = board.spaces[0][0];
-  Space firstElementDiagonalR = board.spaces[0][board.size - 1];
+  if(x_won(board)) {
+    return GameStatus::OVER_X_WON;
+  }
+  if(o_won(board)) {
+    return GameStatus::OVER_O_WON;
+  }
   unsigned int boardFill = 0;
 
   // checks the status of horizontal and vertical sameness
   for (unsigned int i = 0; i < board.size; i++) {
-    Space firstElement = board.spaces[i][i];
-    sameElementRow = true;
-    sameElementCol = true;
-    if (firstElement != Space::BLANK) {
-      ++boardFill;
-    }
     for (unsigned int j = 0; j < board.size; j++) {
       if (board.spaces[i][j] != Space::BLANK) {
-        sameElementRow = sameElementRow && board.spaces[i][j] == firstElement;
         ++boardFill;
-      } else {
-        sameElementRow = false;
-      }
-      if (board.spaces[j][i] != Space::BLANK) {
-        sameElementCol = sameElementCol && board.spaces[j][i] == firstElement;
-      } else {
-        sameElementCol = false;
-      }
-      if (board.spaces[i][i] != Space::BLANK) {
-        sameElementDiagonalL = sameElementDiagonalL && board.spaces[i][i] == firstElement;
-      } else {
-        sameElementDiagonalL = false;
-      }
-    }
-    if (sameElementRow || sameElementCol) {
-      if (firstElement == Space::X) {
-        return GameStatus::OVER_X_WON;
-      } else if (firstElement == Space::O) {
-        return GameStatus::OVER_O_WON;
-      }
+      } 
     }
   }
-  unsigned int row = 0;
-  unsigned int col = board.size -1;
-  while (row < board.size) {
-    if (board.spaces[row][col] != Space::BLANK) {
-      sameElementDiagonalR = sameElementDiagonalR && board.spaces[row][col] == firstElementDiagonalR;
-    } else {
-      sameElementDiagonalR = false;
-    }
-    --col;
-    ++row;
-  }
-  if (sameElementDiagonalL || sameElementDiagonalR) {
-    if (sameElementRow || sameElementCol) {
-      if (firstElementDiagonalL == Space::X || firstElementDiagonalR == Space::X ) {
-        return GameStatus::OVER_X_WON;
-      } else if (firstElementDiagonalL == Space::O || firstElementDiagonalR == Space::O) {
-        return GameStatus::OVER_O_WON;
-      }
-    }
-  }
-
   if (boardFill < board.size * board.size) {
     if (board.next_move == Space::X) {
     return GameStatus :: PLAYING_X_TURN;
