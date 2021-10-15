@@ -46,7 +46,6 @@ void game_input_board_size(Board & board) {
 }
 
 void game_display_board_and_input_next_move(Board & board) {
-  board_print(board);
   unsigned int row;
   unsigned int column;
 
