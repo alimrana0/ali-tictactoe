@@ -135,7 +135,6 @@ GameStatus board_get_status(const Board & board) {
   }
   unsigned int boardFill = 0;
 
-  // checks the status of horizontal and vertical sameness
   for (unsigned int i = 0; i < board.size; i++) {
     for (unsigned int j = 0; j < board.size; j++) {
       if (board.spaces[i][j] != Space::BLANK) {
