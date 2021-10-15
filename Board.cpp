@@ -21,6 +21,9 @@ void board_reset_size(Board & board, unsigned int size)
 
 bool board_make_move(Board & board, unsigned int row, unsigned int column)
 {
+  if(board.spaces[row][column] == Space::X || board.spaces[row][column] == Space::O) {
+    return false;
+  }
   if(board.spaces[row][column] == Space::BLANK) {
     if(board.next_move == Space::X) {
     board.spaces[row][column] = Space::X;

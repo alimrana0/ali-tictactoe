@@ -37,7 +37,7 @@ void game_input_board_size(Board & board) {
   cout << PROMPT_BOARD_SIZE << endl;
   unsigned int temp_board_size;
   if(!(cin >> temp_board_size) || temp_board_size < 2 || temp_board_size > 5) {
-    cout << MESSAGE_ERROR << endl;
+    error_exit();
   }
   else {
   board_reset_size(board, temp_board_size);
@@ -51,17 +51,19 @@ void game_display_board_and_input_next_move(Board & board) {
 
     if(board_get_status(board) == (GameStatus::PLAYING_X_TURN)) {
     cout << PROMPT_MOVE_X << endl;
-    cin >> row;
-    cin >> column;
-    if(!(board_make_move(board, row, column))) {
+    if(!(cin >> row && cin >> column) || row > board.size || column > board.size) {
+      error_exit();
+    }
+    else if(!(board_make_move(board, row, column))) {
       error_exit();
     }
     }
     if(board_get_status(board) == (GameStatus::PLAYING_O_TURN)) {
     cout << PROMPT_MOVE_O << endl;
-    cin >> row;
-    cin >> column;
-    if(!(board_make_move(board, row, column))) {
+    if(!(cin >> row && cin >> column) || row > board.size || column > board.size) {
+      error_exit();
+    }
+    else if(!(board_make_move(board, row, column))) {
       error_exit();
     }
     }
