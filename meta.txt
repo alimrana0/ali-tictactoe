@@ -1,17 +1,18 @@
 -- Who worked on this assignment? Provide names and GitHub usernames.
-
+Ali Rana(alimrana0) Ali Alyakoub(aalyakoub)
 
 
 -- How many hours did it take you to complete this assignment?
-
+5
 
 
 -- Describe your approach to implementing the assignment.
-
+I used the concepts we used from in class that dealt with structures to understand
+how these methods should cooperate.
 
 
 -- Did you use any external resources? If so, cite them below.
-
+No.
 
 
 -- (Optional) What was your favorite part of the assignment?
